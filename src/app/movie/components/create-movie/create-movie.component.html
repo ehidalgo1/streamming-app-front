@@ -1,0 +1,143 @@
+<main>
+    <section class="section">
+        <div class="container is-centered is-max-tablet is-max-widescreen my-0">
+            <form action="" class="box mx-0" [formGroup]="createMovieForm" (submit)="$event.preventDefault()">
+                <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                        <input formControlName="title" class="input is-rounded" type="text" placeholder="Title" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Duration</label>
+                    <div class="control">
+                        <input formControlName="duration" class="input is-rounded" type="number" placeholder="Duration" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Year</label>
+                    <div class="control">
+                        <input formControlName="year" class="input is-rounded" 
+                        type="number" 
+                        placeholder="Year" 
+                        min="1000" max="9999" maxlength="4"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Genders</label>
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <div class="select is-rounded">
+                                <select formControlName="genders" #gen name="genders" id="genders"
+                                    (change)="addSelectedGenders(gen.value)">
+                                    <option value="">Select option</option>
+                                    <option *ngFor="let gen of genders">
+                                        {{ gen }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngFor="let g of selectedGenders | keyvalue" class="control">
+                            <span class="tag is-large is-link">
+                                {{g.value}}
+                                <button class="delete is-small"></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Resume</label>
+                    <div class="control">
+                        <textarea formControlName="resume" class="textarea" placeholder="Resume"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="country" class="label">Country</label>
+                    <div class="control">
+                        <div class="select is-rounded">
+                            <select formControlName="country" name="country" id="country" class="select is-rounded">
+                                <option *ngFor="let item of countries" value="{{item}}">
+                                    {{ item }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <label class="label">Image</label>
+                        <div class="file has-name">
+                            <label class="file-label">
+                                <input 
+                                type="file"
+                                (change)="handleFileInput($event)"
+                                formControlName="image" class="file-input" name="image" />
+                                <span class="file-cta">
+                                    <span class="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label"> Choose a file… </span>
+                                </span>
+                                <span class="file-name">{{fileName}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <label class="label">Preview</label>
+                        <img
+                        #imagePreview
+                        [src]="imageUrl"
+                        class="img-preview" alt="image" id="">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Video</label>
+                    <div class="control">
+                        <input formControlName="video" class="input is-rounded" type="" placeholder="Url video" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Actors</label>
+                    <div class="control mb-2">
+                        <input formControlName="actors" 
+                        #actor 
+                        class="input is-rounded" 
+                        type="text" placeholder="Actors"
+                        (keydown.enter)="addActors(actor.value.toLowerCase())" />
+                    </div>
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div *ngFor="let act of actors | keyvalue" class="control">
+                            <span class="tag is-large is-link">
+                                {{act.value | capitalizeNames}}
+                                <button class="delete is-small"></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Directors</label>
+                    <div class="control mb-2">
+                        <input formControlName="directors" #director class="input is-rounded" type=""
+                            placeholder="Directors" (keydown.enter)="addDirectors(director.value.toLowerCase())" />
+                    </div>
+                    <div class="field is-grouped is-grouped-multiline">
+
+                        <div *ngFor="let dir of directors | keyvalue" class="control">
+                            <span class="tag is-large is-link">
+                                {{dir.value | capitalizeNames}}
+                                <button class="delete is-small"></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="field mt-6">
+                    <div class="control is-centered">
+                        <button 
+                        (click)="createMovie()"
+                        class="button is-link is-rounded is-medium">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
